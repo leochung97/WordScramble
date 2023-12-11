@@ -7,6 +7,7 @@ struct ContentView: View {
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingError = false
+    @State private var score = 0
     
     // let people = ["Finn", "Leia", "Luke", "Rey"]
 
@@ -17,6 +18,10 @@ struct ContentView: View {
                     TextField("Enter your word", text: $newWord)
                         .textInputAutocapitalization(.never)
                 }
+                
+                Section("Score") {
+                    Text(score, format: IntegerFormatStyle())
+                }
 
                 Section {
                     ForEach(usedWords, id: \.self) { word in
@@ -26,6 +31,8 @@ struct ContentView: View {
                         }
                     }
                 }
+                
+                
             }
             .navigationTitle(rootWord)
             .onSubmit(addNewWord)
@@ -105,6 +112,7 @@ struct ContentView: View {
             usedWords.insert(answer, at: 0)
         }
         newWord = ""
+        score += answer.count
     }
     
     func startGame() {
